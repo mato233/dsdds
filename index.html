@@ -27,16 +27,16 @@
             border: 1px solid #27272a;
         }
         
-        /* Zväčšené logo na dvojnásobok */
+        /* Logo zväčšené ešte o 50 % */
         .logo-container {
             display: inline-block;
             margin-bottom: 16px;
             width: 100%;
         }
         .logo {
-            width: 280px; /* Dvojnásobná veľkosť */
+            width: 420px; /* Zväčšené o 1,5x oproti 280px */
             height: auto;
-            max-height: 180px;
+            max-height: 270px;
             object-fit: contain;
             display: block;
             margin: 0 auto;
@@ -66,14 +66,14 @@
         }
         .star {
             font-size: 44px;
-            color: #3f3f46; /* Tmavá sivá v základe */
+            color: #3f3f46; /* Tmavá sivá */
             cursor: pointer;
             transition: transform 0.15s, color 0.2s;
             -webkit-tap-highlight-color: transparent;
         }
         .star:active { transform: scale(1.25); }
         
-        /* Zlatá farba pre ozlátené hviezdičky */
+        /* Zlatá farba po kliknutí */
         .star.active {
             color: #FFC107;
         }
@@ -111,11 +111,13 @@
         }
         textarea:focus, input[type="email"]:focus {
             outline: none;
-            border-color: #D32F2F;
+            border-color: #008c45;
         }
+        
+        /* Zelené tlačidlo podľa loga */
         button {
             width: 100%;
-            background: #D32F2F;
+            background: #008c45; /* Talianska zelená */
             color: #ffffff;
             border: none;
             padding: 15px;
@@ -125,7 +127,7 @@
             font-size: 16px;
             transition: background 0.2s;
         }
-        button:active { transform: scale(0.98); background: #B71C1C; }
+        button:active { transform: scale(0.98); background: #006b34; }
 
         /* Poďakovacia obrazovka */
         #thank-you-screen {
@@ -157,10 +159,10 @@
             <span class="star" data-value="2" onclick="rate(2)">★</span>
             <span class="star" data-value="3" onclick="rate(3)">★</span>
             <span class="star" data-value="4" onclick="rate(4)">★</span>
-            <span class="star" data-value="5" onclick="rate(5)">★</span>
+            <span class="star" onclick="rate(5)">★</span>
         </div>
 
-        <!-- Formulár po kliknutí 1-3 hviezdy -->
+        <!-- Formulár po kliknutí na 1-3 hviezdy -->
         <form id="feedback-form" onsubmit="sendFeedback(event)">
             <textarea id="sprava" name="sprava" placeholder="Čo môžeme do budúcna spraviť lepšie?" required></textarea>
             
@@ -180,10 +182,11 @@
 </div>
 
 <script>
-    const GOOGLE_REVIEW_URL = "https://maps.app.goo.gl/k3B7XG8xYJqR7XJCA";
+    // Nový Google odkaz priamo pre vyhľadávanie podniku
+    const GOOGLE_REVIEW_URL = "https://www.google.com/searchviewer/10?sca_esv=b4b34ba82bc92dd8&rlz=1CDGOYI_enSK1144SK1145&hl=sk&output=search&svid=CAwSHRIbCgNwdnESFENnMHZaeTh4TVdOdVlqWTFNbk0zGAo&lqi=Cg9waXp6YSBib3JzYWxpbm8iA4gBAUiHloqj0auAgAhaIRAAEAEYABgBIg9waXp6YSBib3JzYWxpbm8qBggCEAAQAZIBDXBpenphdGFrZWF3YXmqAVwKDS9nLzExYzF3amZkdncQASoTIg9waXp6YSBib3JzYWxpbm8oRDIfEAEiG7uRMQmwKzlG5Q_bpG-hdsgrjasdIStWNttpZzITEAIiD3BpenphIGJvcnNhbGlubw&phdesc=tr5ciWRnK6M&sa=X&ved=2ahUKEwj237TCg6OWAxWzgP0HHQCLDHgQkbkFegQIIxAE#sv=CAwSXQoGbGNsX3B2EjUKA3B2cRIuQ2cwdlp5OHhNV051WWpZMU1uTTNFZ3dRQVJvR0NBQVFBQmdBTUFKU0F3b0JBZxIICgNmdnISATEaEmxvY2FsLXBsYWNlLXZpZXdlchgKIMePrH0";
 
     function rate(stars) {
-        // 1. Zafarbí hviezdičky na zlato podľa kliknutého počtu
+        // 1. Rozsvietenie hviezdičiek na zlato
         const allStars = document.querySelectorAll('.star');
         allStars.forEach((star, index) => {
             if (index < stars) {
@@ -193,7 +196,7 @@
             }
         });
 
-        // 2. Malý delay (400 ms), aby zákazník stihol vidieť zlaté hviezdičky
+        // 2. Skrátený delay na presne 300 ms
         setTimeout(() => {
             if (stars >= 4) {
                 window.location.replace(GOOGLE_REVIEW_URL);
@@ -203,7 +206,7 @@
                 document.getElementById('subtitle').style.display = 'none';
                 document.getElementById('feedback-form').style.display = 'block';
             }
-        }, 400);
+        }, 300);
     }
 
     function sendFeedback(event) {
