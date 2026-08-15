@@ -121,13 +121,23 @@
             font-size: 16px;
             transition: background 0.2s;
         }
-        button:active { background: #B71C1C; }
+        button:active { transform: scale(0.98); background: #B71C1C; }
+
+        /* Poďakovacia obrazovka */
+        #thank-you-screen {
+            display: none;
+            padding: 15px 0;
+        }
+        .pizza-icon {
+            font-size: 50px;
+            margin-bottom: 12px;
+        }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <!-- LOGO PIZZERIE -->
+    <!-- LOGO PIZZERIE (ak chyba, skryje sa) -->
     <div class="logo-container" id="logo-box">
         <img src="logo.png" alt="Pizza Borsalino" class="logo" onerror="document.getElementById('logo-box').style.display='none'">
     </div>
@@ -146,23 +156,22 @@
             <span class="star" onclick="rate(5)">★</span>
         </div>
 
-        <!-- Klasický FormSubmit formulár s nastaviteľným _next presmerovaním -->
-        <form id="feedback-form" action="https://formsubmit.co/matej23poliak@gmail.com" method="POST">
-            <!-- FormSubmit nastavenia -->
-            <input type="hidden" name="_subject" value="Nová sťažnosť z NFC stojana - Pizza Borsalino!">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">
-            
-            <!-- TU NASTAVUJEŠ PRESMEROVANIE PODĽA TOHO NÁVODU -->
-            <input type="hidden" name="_next" value="https://mato233.github.io/?status=success">
-
-            <textarea name="sprava" placeholder="Čo môžeme do budúcna spraviť lepšie?" required></textarea>
+        <!-- Formulár po kliknutí 1-3 hviezdy -->
+        <form id="feedback-form" onsubmit="sendFeedback(event)">
+            <textarea id="sprava" name="sprava" placeholder="Čo môžeme do budúcna spraviť lepšie?" required></textarea>
             
             <label class="input-label">Chcete, aby sme vám na správu odpovedali?</label>
-            <input type="email" name="email" placeholder="Zanechajte váš e-mail (voliteľné)">
+            <input type="email" id="email" name="email" placeholder="Zanechajte váš e-mail (voliteľné)">
             
-            <button type="submit">Odoslať majiteľovi</button>
+            <button type="submit" id="submit-btn">Odoslať majiteľovi</button>
         </form>
+    </div>
+
+    <!-- POĎAKOVACIA OBRAZOVKA -->
+    <div id="thank-you-screen">
+        <div class="pizza-icon">🍕</div>
+        <h2>Ďakujeme za vašu úprimnosť</h2>
+        <p class="subtitle" style="margin-top: 10px; margin-bottom: 0;">Urobíme všetko pre to, aby ste sa u nás nabudúce cítili lepšie.</p>
     </div>
 </div>
 
@@ -171,15 +180,41 @@
 
     function rate(stars) {
         if (stars >= 4) {
-            // 4 a 5 hviezdičiek -> Presmerovanie na Google
             window.location.replace(GOOGLE_REVIEW_URL);
         } else {
-            // 1 až 3 hviezdičky -> Otvorenie formulára
             document.getElementById('star-container').style.display = 'none';
             document.getElementById('title').innerText = "Chceme to napraviť";
             document.getElementById('subtitle').style.display = 'none';
             document.getElementById('feedback-form').style.display = 'block';
         }
+    }
+
+    function sendFeedback(event) {
+        event.preventDefault();
+
+        const btn = document.getElementById('submit-btn');
+        btn.innerText = "Odosielam...";
+        btn.disabled = true;
+
+        const formData = new FormData();
+        formData.append('sprava', document.getElementById('sprava').value);
+        formData.append('email', document.getElementById('email').value);
+        formData.append('_subject', 'Nová sťažnosť z NFC stojana - Pizza Borsalino!');
+        formData.append('_template', 'table');
+        formData.append('_captcha', 'false');
+
+        fetch("https://formsubmit.co/ajax/matej23poliak@gmail.com", {
+            method: "POST",
+            body: formData
+        })
+        .then(() => {
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('thank-you-screen').style.display = 'block';
+        })
+        .catch(() => {
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('thank-you-screen').style.display = 'block';
+        });
     }
 </script>
 
