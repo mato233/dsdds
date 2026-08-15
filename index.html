@@ -27,21 +27,18 @@
             border: 1px solid #27272a;
         }
         
-        /* Logo Pizza Borsalino */
+        /* Transparentné, veľké a čisté logo */
         .logo-container {
-            background: #ffffff;
-            padding: 10px 16px;
-            border-radius: 16px;
             display: inline-block;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            margin-bottom: 12px;
         }
         .logo {
-            width: 120px;
+            width: 190px; /* Zväčšené logo */
             height: auto;
-            max-height: 70px;
+            max-height: 110px;
             object-fit: contain;
             display: block;
+            margin: 0 auto;
         }
 
         h2 { 
@@ -67,7 +64,7 @@
         }
         .star {
             font-size: 44px;
-            color: #3f3f46;
+            color: #FFC107; /* Zlaté hviezdičky */
             cursor: pointer;
             transition: transform 0.1s;
             -webkit-tap-highlight-color: transparent;
@@ -137,7 +134,7 @@
 <body>
 
 <div class="card">
-    <!-- LOGO PIZZERIE (ak chyba, skryje sa) -->
+    <!-- LOGO PIZZERIE (Bez bieleho podkladu) -->
     <div class="logo-container" id="logo-box">
         <img src="logo.png" alt="Pizza Borsalino" class="logo" onerror="document.getElementById('logo-box').style.display='none'">
     </div>
