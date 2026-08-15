@@ -25,18 +25,24 @@
             width: 100%;
             max-width: 380px;
             border: 1px solid #27272a;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Zarovná celý obsah karty presne na stred */
         }
         
-        /* Logo zväčšené ešte o 50 % */
+        /* Perfektne vycentrovaný container pre logo */
         .logo-container {
-            display: inline-block;
-            margin-bottom: 16px;
             width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
         }
         .logo {
-            width: 420px; /* Zväčšené o 1,5x oproti 280px */
+            width: 100%;
+            max-width: 300px; /* Maximálna šírka pre perfektný stred bez pretekania */
             height: auto;
-            max-height: 270px;
+            max-height: 180px;
             object-fit: contain;
             display: block;
             margin: 0 auto;
@@ -48,12 +54,14 @@
             margin-bottom: 8px; 
             line-height: 1.3;
             letter-spacing: -0.2px;
+            width: 100%;
         }
         .subtitle { 
             color: #a1a1aa; 
             font-size: 14px; 
             margin-bottom: 24px; 
             line-height: 1.4;
+            width: 100%;
         }
         
         /* Hviezdičky - v základe sivé */
@@ -63,6 +71,7 @@
             gap: 10px;
             margin-bottom: 12px;
             direction: ltr;
+            width: 100%;
         }
         .star {
             font-size: 44px;
@@ -83,6 +92,7 @@
             display: none;
             margin-top: 18px;
             text-align: left;
+            width: 100%;
         }
         .input-label {
             font-size: 13px;
@@ -133,6 +143,7 @@
         #thank-you-screen {
             display: none;
             padding: 15px 0;
+            width: 100%;
         }
         .pizza-icon {
             font-size: 50px;
@@ -143,13 +154,13 @@
 <body>
 
 <div class="card">
-    <!-- LOGO PIZZERIE -->
+    <!-- LOGO PIZZERIE (Vycentrované) -->
     <div class="logo-container" id="logo-box">
         <img src="logo.png" alt="Pizza Borsalino" class="logo" onerror="document.getElementById('logo-box').style.display='none'">
     </div>
 
     <!-- HLAVNÁ OBRAZOVKA -->
-    <div id="main-screen">
+    <div id="main-screen" style="width: 100%;">
         <h2 id="title">Pomôžte nám tvoriť miesto, kam sa budete radi vracať</h2>
         <p class="subtitle" id="subtitle">Každé hodnotenie si osobne čítame.</p>
 
@@ -159,7 +170,7 @@
             <span class="star" data-value="2" onclick="rate(2)">★</span>
             <span class="star" data-value="3" onclick="rate(3)">★</span>
             <span class="star" data-value="4" onclick="rate(4)">★</span>
-            <span class="star" onclick="rate(5)">★</span>
+            <span class="star" data-value="5" onclick="rate(5)">★</span>
         </div>
 
         <!-- Formulár po kliknutí na 1-3 hviezdy -->
@@ -182,7 +193,6 @@
 </div>
 
 <script>
-    // Nový Google odkaz priamo pre vyhľadávanie podniku
     const GOOGLE_REVIEW_URL = "https://www.google.com/searchviewer/10?sca_esv=b4b34ba82bc92dd8&rlz=1CDGOYI_enSK1144SK1145&hl=sk&output=search&svid=CAwSHRIbCgNwdnESFENnMHZaeTh4TVdOdVlqWTFNbk0zGAo&lqi=Cg9waXp6YSBib3JzYWxpbm8iA4gBAUiHloqj0auAgAhaIRAAEAEYABgBIg9waXp6YSBib3JzYWxpbm8qBggCEAAQAZIBDXBpenphdGFrZWF3YXmqAVwKDS9nLzExYzF3amZkdncQASoTIg9waXp6YSBib3JzYWxpbm8oRDIfEAEiG7uRMQmwKzlG5Q_bpG-hdsgrjasdIStWNttpZzITEAIiD3BpenphIGJvcnNhbGlubw&phdesc=tr5ciWRnK6M&sa=X&ved=2ahUKEwj237TCg6OWAxWzgP0HHQCLDHgQkbkFegQIIxAE#sv=CAwSXQoGbGNsX3B2EjUKA3B2cRIuQ2cwdlp5OHhNV051WWpZMU1uTTNFZ3dRQVJvR0NBQVFBQmdBTUFKU0F3b0JBZxIICgNmdnISATEaEmxvY2FsLXBsYWNlLXZpZXdlchgKIMePrH0";
 
     function rate(stars) {
